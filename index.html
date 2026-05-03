@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How Are You Feeling?</title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, Arial, sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #f0fdf4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      animation: fadeIn 0.8s ease;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .btn1 { background: #ff6b6b; color: white; }
+    .btn2 { background: #22c55e; color: white; }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      width: 85%;
+      max-width: 300px;
+      text-align: center;
+      display: none;
+      animation: popIn 0.3s forwards;
+    }
+
+    @keyframes popIn {
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .install-btn {
+      margin-top: 15px;
+      font-size: 14px;
+      background: #3b82f6;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>How are you feeling today?</h1>
+
+  <button class="btn1" onclick="showMessage(1)">I'm struggling</button>
+  <button class="btn2" onclick="showMessage(2)">I want to live and enjoy life</button>
+
+  <button id="installBtn" class="install-btn" style="display:none;">Install App</button>
+</div>
+
+<div id="overlay"></div>
+
+<div id="popup">
+  <p id="message"></p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+  // Sound using Web Audio API
+  function playSound(type) {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    osc.type = "sine";
+
+    if (type === "sad") osc.frequency.value = 200;
+    else osc.frequency.value = 600;
+
+    osc.connect(ctx.destination);
+    osc.start();
+    setTimeout(() => osc.stop(), 150);
+  }
+
+  function showMessage(option) {
+    const msg = document.getElementById("message");
+    const popup = document.getElementById("popup");
+    const overlay = document.getElementById("overlay");
+
+    if (option === 1) {
+      msg.innerText = "I'm really sorry you're feeling this way. You don’t have to go through it alone—there are people who care and want to help you.";
+      playSound("sad");
+    } else {
+      msg.innerText = "I'm so happy to hear that! Enjoy your life with friends and family 😊";
+      playSound("happy");
+    }
+
+    popup.style.display = "block";
+    overlay.style.display = "block";
+  }
+
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  // PWA Install
+  let deferredPrompt;
+  const installBtn = document.getElementById("installBtn");
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "block";
+  });
+
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    }
+  });
+
+  // Register service worker
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
+
+</body>
+  </html>
