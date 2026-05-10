@@ -8,57 +8,154 @@
   <link rel="shortcut icon" href="https://raw.githubusercontent.com/vishwakarmarohit0266/Life-Support-App/main/icon/1777819477690.png">
   <link rel="manifest" href="manifest.json">
 
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
   <style>
-    body {
+    :root {
+      --bg: rgba(255, 255, 255, 0.18);
+      --border: rgba(255, 255, 255, 0.3);
+      --text: #ffffff;
+
+      --red: #ff5c5c;
+      --green: #22c55e;
+      --purple: #9b59b6;
+      --pink: #ff5fd2;
+      --blue: #2563eb;
+
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: system-ui, Arial, sans-serif;
-      background: linear-gradient(135deg, #dbeafe, #f0fdf4);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      overflow: hidden;
+
+      background:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url("/Oxygen.jpg")
+        center/cover no-repeat fixed;
+    }
+
+    .app {
+      width: 95%;
+      max-width: 420px;
     }
 
     .card {
-      background: white;
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 320px;
-      width: 90%;
-      animation: fadeIn 0.8s ease;
+      background: var(--bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      border: 1px solid var(--border);
+      border-radius: 28px;
+
+      padding: 28px;
+      box-shadow: var(--shadow);
+
+      animation: fadeIn 0.5s ease;
     }
 
     h1 {
-      font-size: 22px;
+      color: var(--text);
+      font-size: 28px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    p {
+      color: rgba(255,255,255,0.85);
+      text-align: center;
       margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      margin: 20px 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
       border: none;
-      border-radius: 10px;
+      border-radius: 16px;
+      padding: 15px;
       font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
+      color: white;
+      transition: 0.2s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
     }
 
     button:active {
       transform: scale(0.97);
     }
 
-    .btn1 { background: #ff6b6b; color: white; }
-    .btn2 { background: #22c55e; color: white; }
+    .btn1 {
+      background: linear-gradient(135deg, #ff5c5c, #d90429);
+    }
+
+    .btn2 {
+      background: linear-gradient(135deg, #22c55e, #15803d);
+    }
+
+    .btn3 {
+      background: linear-gradient(135deg, #9b59b6, #6d28d9);
+    }
+
+    .btn4 {
+      background: linear-gradient(135deg, #ff5fd2, #d63384);
+    }
+
+    .btn5 {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    }
+
+    .btn6 {
+      background: linear-gradient(135deg, #0f172a, #334155);
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* Popup */
 
     #overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       display: none;
-      animation: fadeIn 0.3s;
+      z-index: 10;
     }
 
     #popup {
@@ -66,82 +163,298 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.8);
+
+      width: 90%;
+      max-width: 340px;
+
       background: white;
-      padding: 20px;
-      border-radius: 15px;
-      width: 85%;
-      max-width: 300px;
-      text-align: center;
+      border-radius: 24px;
+      padding: 24px;
+
+      z-index: 20;
       display: none;
-      animation: popIn 0.3s forwards;
+
+      animation: popIn 0.25s forwards;
     }
 
-    @keyframes popIn {
-      to { transform: translate(-50%, -50%) scale(1); }
+    #popup h2 {
+      color: #111827;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    #message {
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .popup-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .popup-buttons button {
+      flex: 1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer {
+      margin-top: 22px;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .install-btn {
-      margin-top: 15px;
-      font-size: 14px;
-      background: #3b82f6;
-      color: white;
+    @keyframes popIn {
+      to {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 14px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>How are you feeling today?</h1>
+<div class="app">
 
-  <button class="btn1" onclick="showMessage(1)">I'm struggling</button>
-  <button class="btn2" onclick="showMessage(2)">I want to live and enjoy life</button>
+  <div class="card">
 
-  <button id="installBtn" class="install-btn" style="display:none;">Install App</button>
+    <!-- HOME -->
+    <div id="view-home" class="view active">
+
+      <h1>💙 Life Support</h1>
+
+      <p>
+        You are important.  
+        Choose how you're feeling today.
+      </p>
+
+      <hr>
+
+      <div class="buttons">
+
+        <button class="btn1" onclick="showMessage('sad')">
+          😔 I'm struggling
+        </button>
+
+        <button class="btn2" onclick="showMessage('happy')">
+          😊 I want to enjoy life
+        </button>
+
+        <button class="btn3" onclick="showMessage('bored')">
+          😶 I'm bored
+        </button>
+
+        <button class="btn4" onclick="showMessage('games')">
+          🎮 I want to play games
+        </button>
+
+        <button class="btn5" onclick="showView('support')">
+          🆘 Help & Support
+        </button>
+
+        <button class="btn6" id="installBtn" style="display:auto;">
+          📲 Install App
+        </button>
+
+      </div>
+
+      <div class="footer">
+        Stay strong • You are not alone
+      </div>
+
+    </div>
+
+    <!-- SUPPORT -->
+    <div id="view-support" class="view">
+
+      <h1>🆘 Help Desk</h1>
+
+      <p>
+        Talk to someone right now.
+      </p>
+
+      <hr>
+
+      <div class="buttons">
+
+        <button class="btn2">
+          <a href="tel:18005990019" target="_blank">
+            <i class="fa-solid fa-phone"></i>
+            Call 1800-599-0019
+          </a>
+        </button>
+
+        <button class="btn4">
+          <a href="tel:+912227546669" target="_blank">
+            <i class="fa-solid fa-phone"></i>
+            Call +91 22 2754 6669
+          </a>
+        </button>
+        <button class="btn1">
+          <a
+            href="https://wa.me/8871485490?text=Hi,%20I%20need%20help."
+            target="_blank"
+          >
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Support
+          </a>
+        </button>
+
+        <button class="btn5">
+          <a href="tel:112" target="_blank">
+            <i class="fa-solid fa-phone"></i>
+            Emergency Contact
+          </a>
+        </button>
+
+        <button class="btn6" onclick="showView('home')">
+          ⬅ Back Home
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
+<!-- POPUP -->
 <div id="overlay"></div>
 
 <div id="popup">
+
+  <h2>Message</h2>
+
   <p id="message"></p>
-  <button onclick="closePopup()">Close</button>
+
+  <div class="popup-buttons">
+
+    <button class="btn5">
+      <a href="help.html">
+        Get Help
+      </a>
+    </button>
+
+    <button class="btn6" onclick="closePopup()">
+      Close
+    </button>
+
+  </div>
+
 </div>
 
 <script>
-  // Sound using Web Audio API
-  function playSound(type) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    osc.type = "sine";
 
-    if (type === "sad") osc.frequency.value = 200;
-    else osc.frequency.value = 600;
+  // VIEW CONTROLLER
+  function showView(viewId) {
+    document
+      .querySelectorAll(".view")
+      .forEach(view => view.classList.remove("active"));
 
-    osc.connect(ctx.destination);
-    osc.start();
-    setTimeout(() => osc.stop(), 150);
+    document
+      .getElementById("view-" + viewId)
+      .classList.add("active");
   }
 
-  function showMessage(option) {
-    const msg = document.getElementById("message");
+  // SOUND
+  function playSound(freq) {
+
+    const ctx = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.frequency.value = freq;
+    osc.type = "sine";
+
+    gain.gain.value = 0.05;
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+
+    setTimeout(() => {
+      osc.stop();
+      ctx.close();
+    }, 180);
+  }
+
+  // POPUP
+  function showMessage(type) {
+
     const popup = document.getElementById("popup");
     const overlay = document.getElementById("overlay");
+    const message = document.getElementById("message");
 
-    if (option === 1) {
-      msg.innerText = "I'm really sorry you're feeling this way. You don’t have to go through it alone—there are people who care and want to help you.";
-      playSound("sad");
-    } else {
-      msg.innerText = "I'm so happy to hear that! Enjoy your life with friends and family 😊";
-      playSound("happy");
+    let text = "";
+    let sound = 300;
+
+    switch(type) {
+
+      case "sad":
+        text =
+          "I'm sorry you're feeling this way. Please remember that your life matters, and there are people who truly care about you.";
+        sound = 220;
+      break;
+
+      case "happy":
+        text =
+          "That's wonderful 🌸 Keep smiling and enjoy your beautiful life.";
+        sound = 500;
+      break;
+
+      case "bored":
+        text =
+          "Try listening to music, watching something fun, talking to a friend, or taking a short walk outside.";
+        sound = 650;
+      break;
+
+      case "games":
+        text =
+          "Gaming can be a fun way to relax 🎮 Enjoy yourself and have fun.";
+        sound = 800;
+      break;
     }
+
+    message.innerText = text;
 
     popup.style.display = "block";
     overlay.style.display = "block";
+
+    playSound(sound);
   }
 
   function closePopup() {
@@ -149,28 +462,42 @@
     document.getElementById("overlay").style.display = "none";
   }
 
-  // PWA Install
+  // CLOSE WHEN CLICKING OVERLAY
+  document.getElementById("overlay").addEventListener("click", closePopup);
+
+  // PWA INSTALL
   let deferredPrompt;
+
   const installBtn = document.getElementById("installBtn");
 
   window.addEventListener("beforeinstallprompt", (e) => {
+
     e.preventDefault();
+
     deferredPrompt = e;
+
     installBtn.style.display = "block";
   });
 
   installBtn.addEventListener("click", async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-    }
+
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    deferredPrompt = null;
+
+    installBtn.style.display = "none";
   });
 
-  // Register service worker
+  // SERVICE WORKER
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js");
+    });
   }
+
 </script>
 
 </body>
-  </html>
+</html>
