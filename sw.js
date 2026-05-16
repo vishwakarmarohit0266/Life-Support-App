@@ -1,7 +1,9 @@
 const CACHE_NAME = "life-app-v1";
 const urlsToCache = [
-  "",
-  "/index.html"
+  "./",
+  "./index.html",
+  "./style.css",
+  "./script.js"
 ];
 
 self.addEventListener("install", event => {
