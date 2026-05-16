@@ -1,7 +1,7 @@
 {
   "name": "Life Support App",
   "short_name": "LifeApp",
-  "start_url": "./index.html",
+  "start_url": "https://vishwakarmarohit0266.github.io/Life-Support-App/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3b82f6",
